@@ -1,0 +1,19 @@
+config:
+
+  difficulty: 0
+
+  time:
+    value: 3000
+    lock: true
+
+  on_join:
+    enable: true
+    set_life: 2
+    cancel_message: true
+
+  on_quit:
+    enable: true
+    cancel_message: true
+
+  on_damage:
+    cancel: true
