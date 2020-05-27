@@ -1,6 +1,6 @@
 config:
 
-  difficulty: 0
+  difficulty: peaceful
 
   time:
     value: 3000
@@ -16,4 +16,10 @@ config:
     cancel_message: true
 
   on_damage:
+    cancel: true
+
+  on_block_break:
+    cancel: true
+
+  on_block_place:
     cancel: true

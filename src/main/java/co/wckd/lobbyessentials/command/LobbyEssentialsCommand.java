@@ -44,7 +44,7 @@ public class LobbyEssentialsCommand {
         Location location = execution.getPlayer().getLocation();
         plugin.getInitLifecycle().setLobbyLocation(location);
 
-        fileLifecycle.getConfig().set("on_join.location", plugin.getAdapter().adapt(location, Location.class, String.class));
+        fileLifecycle.getConfig().set("config.on_join.location", plugin.getAdapter().adapt(location, Location.class, String.class));
         fileLifecycle.getConfig().save(fileLifecycle.getConfigFile());
 
         execution.sendMessage("§aLobby successfully set.");

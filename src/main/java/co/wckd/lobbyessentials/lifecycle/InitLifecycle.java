@@ -2,8 +2,7 @@ package co.wckd.lobbyessentials.lifecycle;
 
 import co.wckd.boilerplate.lifecycle.Lifecycle;
 import co.wckd.lobbyessentials.LobbyEssentialsPlugin;
-import co.wckd.lobbyessentials.listener.JoinListener;
-import co.wckd.lobbyessentials.listener.QuitListener;
+import co.wckd.lobbyessentials.listener.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -38,12 +37,12 @@ public class InitLifecycle extends Lifecycle {
 
         for (World world : Bukkit.getWorlds()) {
             world.setDifficulty(Difficulty.valueOf(config.getString("config.difficulty").toUpperCase()));
-            world.setTime(config.getLong("time.value"));
-            world.setGameRuleValue("doDaylightCycle", config.getBoolean("time.lock") ? "false" : "true");
+            world.setTime(config.getLong("config.time.value"));
+            world.setGameRuleValue("doDaylightCycle", config.getBoolean("config.time.lock") ? "false" : "true");
         }
 
-        String locationString = config.getString("on_join.location");
-        if(config.getBoolean("on_join.enable") && locationString != null)
+        String locationString = config.getString("config.on_join.location");
+        if(config.getBoolean("config.on_join.enable") && locationString != null)
             lobbyLocation = plugin.getAdapter().adapt(locationString, String.class, Location.class);
 
         registerListeners();
@@ -54,14 +53,20 @@ public class InitLifecycle extends Lifecycle {
 
         PluginManager pluginManager = plugin.getServer().getPluginManager();
 
-        if(config.getBoolean("on_join.enable"))
+        if(config.getBoolean("config.on_join.enable"))
             pluginManager.registerEvents(new JoinListener(plugin), plugin);
 
-        if(config.getBoolean("on_quit.enable"))
+        if(config.getBoolean("config.on_quit.enable"))
             pluginManager.registerEvents(new QuitListener(plugin), plugin);
 
-        if(config.getBoolean("on_damage.cancel"))
-            pluginManager.registerEvents(new QuitListener(plugin), plugin);
+        if(config.getBoolean("config.on_damage.cancel"))
+            pluginManager.registerEvents(new DamageListener(plugin), plugin);
+
+        if(config.getBoolean("config.on_block_break.cancel"))
+            pluginManager.registerEvents(new BlockBreakListener(), plugin);
+
+        if(config.getBoolean("config.on_block_place.cancel"))
+            pluginManager.registerEvents(new BlockPlaceListener(), plugin);
 
     }
 
