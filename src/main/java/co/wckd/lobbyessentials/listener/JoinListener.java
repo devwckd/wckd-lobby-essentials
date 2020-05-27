@@ -1,6 +1,7 @@
 package co.wckd.lobbyessentials.listener;
 
 import co.wckd.lobbyessentials.LobbyEssentialsPlugin;
+import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,6 +27,10 @@ public class JoinListener implements Listener {
 
         if(config.getBoolean("config.on_join.cancel_message"))
             event.setJoinMessage(null);
+
+        Location lobbyLocation = plugin.getInitLifecycle().getLobbyLocation();
+        if(lobbyLocation == null) lobbyLocation = player.getWorld().getSpawnLocation();
+        player.teleport(lobbyLocation);
 
     }
 
